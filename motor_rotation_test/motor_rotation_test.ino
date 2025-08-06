@@ -23,7 +23,7 @@ void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
   digitalWrite(dirPin, HIGH); // 방향 고정
   digitalWrite(enaPin, HIGH); // 모터 활성화
 
-  delay(500);
+  delay(500); // 시작시에 움찔하는 현상이 있는데, 이게 ena핀이 활성화되고 지연시간이 잠깐 있어야 모터가 고정이 된다나 그래서 일단 이렇게 넣어놨으.
   
   for (int i = 0; i < steps; i++) {
     digitalWrite(pulPin, HIGH);
