@@ -17,7 +17,7 @@ def run_test():
             if score_input.lower() == 'q':
                 break
             
-            magnitude_input = input("감정 강도(magnitude, 0.0 이상): ")
+            magnitude_input = input("감정 강도(magnitude, 0.0 ~ 1.0): ")
             if magnitude_input.lower() == 'q':
                 break
 
@@ -28,20 +28,17 @@ def run_test():
             if not (-1.0 <= score <= 1.0):
                 print("오류: score는 -1.0과 1.0 사이의 값이어야 합니다.")
                 continue
-            if magnitude < 0.0:
-                print("오류: magnitude는 0.0 이상의 값이어야 합니다.")
+            if not (0.0 <= magnitude <= 1.0): # magnitude도 0.0~1.0 범위로 가정
+                print("오류: magnitude는 0.0과 1.0 사이의 값이어야 합니다.")
                 continue
 
             print(f"\n입력된 값 -> score: {score:.2f}, magnitude: {magnitude:.2f}")
 
             # machine_controller.py의 함수 호출
             # user_text는 임시로 "수동 테스트" 문자열을 사용합니다.
-            calculated_color, calculated_speed_desc, calculated_speed_val = machine_controller.calculate_and_send_to_machine(
+            calculated_info, color_desc, motor_desc = machine_controller.calculate_and_send_to_machine(
                 score, magnitude, "수동 테스트"
             )
-            
-            print(f"\n[테스트 결과] 결정된 색상: {calculated_color}")
-            print(f"[테스트 결과] 결정된 속도: {calculated_speed_desc} (값: {calculated_speed_val:.2f})")
             
         except ValueError:
             print("잘못된 입력입니다. 숫자를 입력해주세요.")
