@@ -1,4 +1,4 @@
-# 파일명: step_calculator_1.py (수정 버전)
+# 스텝 계산 (파라미터)
 
 def calculate_steps_from_emotions(emotion_data):
     """
@@ -17,9 +17,7 @@ def calculate_steps_from_emotions(emotion_data):
     TOTAL_VOLUME_ML = 40.0 
 
     # --- 2. 감정 비율을 색상 비율로 매핑 ---
-    # M1 (따뜻한 색): '기쁨', '분노'
-    # M2 (중성색): '놀라움', '평온'
-    # M3 (차가운 색): '슬픔', '두려움'
+    # M1 (따뜻한 색): '기쁨', '분노' // M2 (중성색): '놀라움', '평온' // M3 (차가운 색): '슬픔', '두려움'
     
     m1_ratio = emotion_data.get('joy', 0) + emotion_data.get('anger', 0)
     m2_ratio = emotion_data.get('surprise', 0) + emotion_data.get('calm', 0)

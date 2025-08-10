@@ -1,4 +1,4 @@
-# machine_controller_1.py 파일 내용
+# 명령 전송 (시리얼통신)
 import time
 import serial
 import serial.tools.list_ports

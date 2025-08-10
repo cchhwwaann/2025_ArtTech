@@ -1,4 +1,4 @@
-# 메인 코드
+# 파일명: 2025_ArtTech_1.py
 
 import os
 import warnings
@@ -8,7 +8,8 @@ from google.cloud import language_v1
 import vertexai
 from vertexai.preview.generative_models import GenerativeModel, Part
 
-import machine_controller_1 
+# 새로운 모듈 import
+import sequence_controller
 import step_calculator_1
 
 warnings.filterwarnings('ignore', category=UserWarning)
@@ -16,7 +17,7 @@ warnings.filterwarnings('ignore', category=UserWarning)
 # 1. 서비스 계정 키 파일 경로 설정
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/ghksc/Desktop/2025_ArtTech/smart-mark-464523-g6-6f8d28d38fc0.json"
 
-# --- Gemini를 활용한 감정 비율 추출 함수  ---
+# --- Gemini를 활용한 감정 비율 추출 함수 ---
 def analyze_emotions_with_gemini(user_input_text):
     project_id = "smart-mark-464523-g6" 
     location = "us-central1"
@@ -29,8 +30,8 @@ def analyze_emotions_with_gemini(user_input_text):
         return None
 
     prompt = f"""당신은 사용자의 감정을 분석하는 감정 전문가입니다. 
-    사용자의 입력 텍스트에 포함된 감정을 '기쁨(joy)', '슬픔(sadness)', '분노(anger)', '두려움(fear)', '놀라움(surprise)' 
-    그리고 '평온(calm)'의 6가지 카테고리로 분류하고, 각 감정의 비율을 0.0에서 1.0 사이의 소수점으로 반환해주세요. 
+    사용자의 입력 텍스트에 포함된 감정을 'joy', 'sadness', 'anger', 'fear', 'surprise', 
+    그리고 'calm'의 6가지 카테고리로 분류하고, 각 감정의 비율을 0.0에서 1.0 사이의 소수점으로 반환해주세요. 
     반환 값은 JSON 형식으로, 6가지 감정 모두 포함해야 합니다. 감정의 총합은 1.0이 되어야 합니다.
     다른 설명이나 추가적인 텍스트는 일절 포함하지 말고, 오직 JSON 데이터만 반환하세요.
 
@@ -44,7 +45,6 @@ def analyze_emotions_with_gemini(user_input_text):
     try:
         response = model.generate_content([Part.from_text(prompt)])
         
-        # 응답 텍스트 전처리: 불필요한 마크다운 코드 블록 제거
         json_text = response.text.strip()
         if json_text.startswith('```json'):
             json_text = json_text.strip('` \njson')
@@ -52,10 +52,10 @@ def analyze_emotions_with_gemini(user_input_text):
         return json.loads(json_text) 
     except Exception as e:
         print(f"Gemini 감정 분석 API 호출 중 오류가 발생했습니다: {e}")
-        print(f"반환된 텍스트 내용: '{response.text}'") # 디버깅
+        print(f"반환된 텍스트 내용: '{response.text}'")
         return None
-    
-# --- Gemini를 활용한 심리 상담 메시지 생성 함수  ---
+
+# --- Gemini를 활용한 심리 상담 메시지 생성 함수 ---
 def generate_counseling_message_with_gemini(emotion_data, user_input_text):
     project_id = "smart-mark-464523-g6" 
     location = "us-central1"
@@ -113,31 +113,28 @@ if __name__ == "__main__":
 
         print("\n당신의 감정을 분석 중입니다... 잠시만 기다려주세요.")
         try:
-            # 1. 감정 비율 추출 (빠른 응답)
+            # 1. 감정 비율 추출
             emotion_data = analyze_emotions_with_gemini(user_text)
             if not emotion_data:
                 print("감정 분석에 실패했습니다. 다음 참여자를 기다립니다...")
                 continue
             
-            # 2. 감정 비율로 스텝 수 계산
-            M1_steps, M2_steps, M3_steps = step_calculator_1.calculate_steps_from_emotions(emotion_data)
+            # 2. 감정 비율로 각 염료 모터의 스텝 수 계산
+            m1_steps, m2_steps, m3_steps = step_calculator_1.calculate_steps_from_emotions(emotion_data)
             
-            print(f"\n[기계 제어] 결정된 각 색상 스텝 (M1, M2, M3): {M1_steps}, {M2_steps}, {M3_steps}")
-
-            # 3. 모터 제어 명령 먼저 전송
-            machine_controller_1.send_motor_command(1, M1_steps)
-            machine_controller_1.send_motor_command(2, M2_steps)
-            machine_controller_1.send_motor_command(3, M3_steps)
-
-            print("\n[기념품 제작] 모든 모터 구동 명령이 전송되었습니다.")
-            
-            # === 수정된 부분: 감정 비율을 먼저 보기 좋게 출력합니다 ===
+            # -------------------------------------------------------------
             print("\n--- 감정 분석 결과 ---")
             for emotion, ratio in sorted(emotion_data.items(), key=lambda item: item[1], reverse=True):
                 print(f"- {emotion.capitalize()}: {ratio*100:.1f}%")
             print("-----------------------")
             
-            # 4. 모터가 작동하는 동안 상담 메시지 생성 (느린 응답)
+            print(f"\n[염료 제어] 결정된 각 색상 스텝 (M1, M2, M3): {m1_steps}, {m2_steps}, {m3_steps}")
+            # -------------------------------------------------------------
+            
+            # 3. 순차적인 모터 제어 함수를 호출
+            sequence_controller.run_full_sequence(m1_steps, m2_steps, m3_steps)
+            
+            # 4. 모터가 작동하는 동안 상담 메시지 생성
             consultation_message = generate_counseling_message_with_gemini(emotion_data, user_text)
             
             # 5. 메시지 출력
