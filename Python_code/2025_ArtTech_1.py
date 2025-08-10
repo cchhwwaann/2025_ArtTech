@@ -8,16 +8,16 @@ from google.cloud import language_v1
 import vertexai
 from vertexai.preview.generative_models import GenerativeModel, Part
 
-# 새로운 모듈 import
+# 모듈
 import sequence_controller
 import step_calculator_1
 
-warnings.filterwarnings('ignore', category=UserWarning)
+warnings.filterwarnings('ignore', category=UserWarning) # api 기한 안내 메세지 생략
 
 # 1. 서비스 계정 키 파일 경로 설정
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/ghksc/Desktop/2025_ArtTech/smart-mark-464523-g6-6f8d28d38fc0.json"
 
-# --- Gemini를 활용한 감정 비율 추출 함수 ---
+# --- Gemini 감정 비율 추출 함수 ---
 def analyze_emotions_with_gemini(user_input_text):
     project_id = "smart-mark-464523-g6" 
     location = "us-central1"
@@ -55,7 +55,7 @@ def analyze_emotions_with_gemini(user_input_text):
         print(f"반환된 텍스트 내용: '{response.text}'")
         return None
 
-# --- Gemini를 활용한 심리 상담 메시지 생성 함수 ---
+# --- Gemini 심리 상담 메시지 생성 함수 ---
 def generate_counseling_message_with_gemini(emotion_data, user_input_text):
     project_id = "smart-mark-464523-g6" 
     location = "us-central1"
@@ -98,7 +98,6 @@ def generate_counseling_message_with_gemini(emotion_data, user_input_text):
 # --- 메인 실행 부분 ---
 if __name__ == "__main__":
     print("오늘 당신의 감정을 3문장 이내로 자유롭게 입력해주세요.")
-    print("종료하려면 '종료'.")
     
     while True:
         user_text = input("\n>>> ")
