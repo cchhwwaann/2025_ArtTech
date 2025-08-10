@@ -10,11 +10,11 @@ def calculate_steps_from_emotions(emotion_data):
 
     # --- 1. 물리적 파라미터 정의 ---
     SYRINGE_AREA_MM2 = 2000.0
-    MM_PER_REVOLUTION = 69.08
-    STEPS_PER_REVOLUTION = 1600
+    MM_PER_REVOLUTION = 69.08 # 고정
+    STEPS_PER_REVOLUTION = 1600 # 고정(변경가능)
     MM_PER_STEP = MM_PER_REVOLUTION / STEPS_PER_REVOLUTION
     MM3_PER_ML = 1000.0
-    TOTAL_VOLUME_ML = 40.0 
+    TOTAL_VOLUME_ML = 40.0 # 조정
 
     # --- 2. 감정 비율을 색상 비율로 매핑 ---
     # M1 (따뜻한 색): '기쁨', '분노' // M2 (중성색): '놀라움', '평온' // M3 (차가운 색): '슬픔', '두려움'
