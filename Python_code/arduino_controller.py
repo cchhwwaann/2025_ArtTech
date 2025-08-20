@@ -11,10 +11,10 @@ def send_motor_command(motor_number, steps):
     print(f"[기계 제어] 모터 {motor_number}에 {steps} 스텝 명령 준비.")
     
     try:
-        arduino_port = 'COM5'
+        arduino_port = 'COM6'
         with serial.Serial(arduino_port, 9600, timeout=5) as ser:
             time.sleep(2) # 아두이노와의 연결 안정화
-            
+
             command = f"NUMBER:{motor_number},STEPS:{steps}\n"
             ser.write(command.encode('utf-8'))
             print(f"[기계 제어] 모터 {motor_number}에 {steps} 스텝 명령 전송 완료. 'DONE' 신호 대기 중...")
@@ -37,4 +37,4 @@ def send_motor_command(motor_number, steps):
 
 if __name__ == "__main__":
     print("--- Machine Controller 단독 테스트 ---")
-    send_motor_command(1, 1000)
+    send_motor_command(1, 3200)

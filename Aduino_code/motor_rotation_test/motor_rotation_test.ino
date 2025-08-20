@@ -14,7 +14,7 @@ int DIR_3 = 3;
 int ENA_3 = 2;
 
 // 풀리 모터
-int PUL_4 = A3; // 예시: 풀리 모터 핀 설정
+int PUL_4 = A3;
 int DIR_4 = A2;
 int ENA_4 = A1;
 
@@ -23,22 +23,18 @@ bool newData = false;
 
 // 모터 제어 함수
 void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
-  digitalWrite(dirPin, HIGH); // 방향 고정
-  digitalWrite(enaPin, HIGH); // 모터 활성화
-  
-  // 모든 모터 핀에 대한 배열을 사용하여 동적으로 핀을 지정할 수 있습니다.
-  // 이 예제에서는 핀을 직접 지정하여 사용합니다.
+  digitalWrite(dirPin, HIGH);
+  digitalWrite(enaPin, HIGH);
 
   delay(50); 
   
   for (int i = 0; i < steps; i++) {
     digitalWrite(pulPin, HIGH);
-    delayMicroseconds(100); // 속도 조절
+    delayMicroseconds(500);
     digitalWrite(pulPin, LOW);
-    delayMicroseconds(100);
+    delayMicroseconds(500);
   }
   
-  // 동작 완료 후 파이썬으로 DONE 신호 전송
   Serial.println("DONE");
   Serial.print("Motor operation completed.");
 }
@@ -58,7 +54,6 @@ void setup() {
 }
 
 void loop() {
-  // 시리얼 통신을 통해 명령어를 받음
   while (Serial.available()) {
     char inChar = (char)Serial.read();
     incomingData += inChar;
@@ -73,7 +68,6 @@ void loop() {
     int motorNumber = numberStr.toInt();
     int motorSteps = stepsStr.toInt();
     
-    // 모터 번호를 확인하여 해당하는 모터 구동
     if (motorNumber == 1) {
       moveMotor(motorSteps, PUL_1, DIR_1, ENA_1);
     } else if (motorNumber == 2) {

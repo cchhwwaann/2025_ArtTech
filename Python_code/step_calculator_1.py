@@ -11,7 +11,7 @@ def calculate_steps_from_emotions(emotion_data):
     # --- 1. 물리적 파라미터 정의 ---
     SYRINGE_AREA_MM2 = 2000.0
     MM_PER_REVOLUTION = 69.08 # 고정
-    STEPS_PER_REVOLUTION = 1600 # 고정(변경가능)
+    STEPS_PER_REVOLUTION = 3200 # 고정(변경가능)
     MM_PER_STEP = MM_PER_REVOLUTION / STEPS_PER_REVOLUTION
     MM3_PER_ML = 1000.0
     TOTAL_VOLUME_ML = 40.0 # 조정
