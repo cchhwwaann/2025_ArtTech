@@ -1,5 +1,5 @@
+# 파일명: sequence_controller.py
 
-import time
 import arduino_controller
 
 # 풀리 모터와 카트 이동에 필요한 물리적 파라미터 정의
@@ -16,26 +16,20 @@ def run_full_sequence(m1_steps, m2_steps, m3_steps):
 
     # 1. 카트를 1번 지점으로 이동
     arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, STEPS_TO_POSITION_1)
-    time.sleep(1) # 모터 동작 대기
     
     # 2. 1번 염료 모터 동작
     arduino_controller.send_motor_command(1, m1_steps)
-    time.sleep(1) # 모터 동작 대기
 
     # 3. 카트를 2번 지점으로 이동
     arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, STEPS_TO_POSITION_2)
-    time.sleep(1) # 모터 동작 대기
 
     # 4. 2번 염료 모터 동작
     arduino_controller.send_motor_command(2, m2_steps)
-    time.sleep(1) # 모터 동작 대기
 
     # 5. 카트를 3번 지점으로 이동
     arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, STEPS_TO_POSITION_3)
-    time.sleep(1) # 모터 동작 대기
     
     # 6. 3번 염료 모터 동작
     arduino_controller.send_motor_command(3, m3_steps)
-    time.sleep(1) # 모터 동작 대기
     
     print("\n[기계 동작] 모든 모터 구동 명령이 전송되었습니다.")
