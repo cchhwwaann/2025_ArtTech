@@ -7,6 +7,8 @@ PULLY_MOTOR_NUMBER = 4
 STEPS_TO_POSITION_1 = 500  # 1번 지점까지 이동하는 스텝 수
 STEPS_TO_POSITION_2 = 500  # 2번 지점까지 이동하는 스텝 수
 STEPS_TO_POSITION_3 = 500  # 3번 지점까지 이동하는 스텝 수
+# 새로운 변수 추가: 카트가 최종적으로 이동해야 하는 스텝 수
+STEPS_TO_FINAL_POSITION = 500 
 
 def run_full_sequence(m1_steps, m2_steps, m3_steps):
     """
@@ -31,5 +33,9 @@ def run_full_sequence(m1_steps, m2_steps, m3_steps):
     
     # 6. 3번 염료 모터 동작
     arduino_controller.send_motor_command(3, m3_steps)
+    
+    # 7. 마지막 풀리 모터 동작
+    print("[기계 동작] 마지막 위치로 카트 이동 시작...")
+    arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, STEPS_TO_FINAL_POSITION)
     
     print("\n[기계 동작] 모든 모터 구동 명령이 전송되었습니다.")
