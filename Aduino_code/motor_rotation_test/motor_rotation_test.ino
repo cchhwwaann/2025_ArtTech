@@ -4,13 +4,13 @@ int DIR_1 = 6;
 int ENA_1 = 5;
 
 // MOTOR_2
-int PUL_2 = 10; 
+int PUL_2 = 10;
 int DIR_2 = 9; 
 int ENA_2 = 8;
 
 // MOTOR_3
 int PUL_3 = 4; 
-int DIR_3 = 3; 
+int DIR_3 = 3;
 int ENA_3 = 2;
 
 // 풀리 모터
@@ -23,8 +23,9 @@ bool newData = false;
 
 // 모터 제어 함수
 void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
+  // 모터 활성화: 액티브 로우 배선에 따라 LOW 신호로 활성화
+  digitalWrite(enaPin, LOW);
   digitalWrite(dirPin, HIGH);
-  digitalWrite(enaPin, HIGH);
 
   delay(50); 
   
@@ -35,6 +36,7 @@ void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
     delayMicroseconds(500);
   }
   
+  // 모터 동작이 끝난 후에도 전원을 유지하여 위치를 고정.
   Serial.println("DONE");
   Serial.print("Motor operation completed.");
 }
@@ -42,11 +44,11 @@ void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
 void setup() {
   Serial.begin(9600); 
   
-  pinMode(PUL_1, OUTPUT); pinMode(DIR_1, OUTPUT); pinMode(ENA_1, OUTPUT);
+  pinMode(PUL_1, OUTPUT); pinMode(DIR_1, OUTPUT);
+  pinMode(ENA_1, OUTPUT);
   pinMode(PUL_2, OUTPUT); pinMode(DIR_2, OUTPUT); pinMode(ENA_2, OUTPUT);
   pinMode(PUL_3, OUTPUT); pinMode(DIR_3, OUTPUT); pinMode(ENA_3, OUTPUT);
   pinMode(PUL_4, OUTPUT); pinMode(DIR_4, OUTPUT); pinMode(ENA_4, OUTPUT);
-
   digitalWrite(ENA_1, LOW); digitalWrite(DIR_1, HIGH);
   digitalWrite(ENA_2, LOW); digitalWrite(DIR_2, HIGH);
   digitalWrite(ENA_3, LOW); digitalWrite(DIR_3, HIGH);
