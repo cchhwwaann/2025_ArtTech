@@ -37,4 +37,4 @@ def send_motor_command(motor_number, steps):
 
 if __name__ == "__main__":
     print("--- Machine Controller 단독 테스트 ---")
-    send_motor_command(1, 3200)
+    send_motor_command(4, -6000)#-4800이 풀리 모터 정방향으로 한바퀴반 , 주사기랑 풀리 둘 다-방향이 반시계,5600// 풀리 모터 풀코스로 -6000스텝 -가 시계방향

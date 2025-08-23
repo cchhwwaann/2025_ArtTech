@@ -4,11 +4,11 @@
 
 # --- 캐릭터별 레진 용량 정의 ---
 character_volumes = {
-    'char1': 35.0,
-    'char2': 40.0,
-    'char3': 45.0,
-    'char4': 50.0,
-    'char5': 55.0
+    '1': 35.0,
+    '2': 40.0,
+    '3': 45.0,
+    '4': 50.0,
+    '5': 55.0
 }
 
 def get_volume(character_name):
