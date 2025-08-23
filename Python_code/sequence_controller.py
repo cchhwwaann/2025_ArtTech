@@ -2,7 +2,7 @@
 
 import arduino_controller
 
-# 풀리 모터와 카트 이동에 필요한 물리적 파라미터 정의
+# 풀리 모터와 카트 이동에 필요한 물리적 파라미터 정의// 끝부터끝까지 1500mm-> 6400스텝
 PULLY_MOTOR_NUMBER = 4
 
 # 카트의 첫 이동 스텝 수
@@ -18,7 +18,7 @@ def run_full_sequence(m1_steps, m2_steps, m3_steps):
     """
     카트 이동과 염료 투하를 순차적으로 제어하는 함수 (전진 부분만)
     """
-    print("\n[기계 동작] 순차적인 염료 투하 프로세스 시작...")
+    print("\n[기계 동작] 순차적인 염료 투하 프로세스 시작...")x``
 
     # 1. 카트를 1번 지점으로 이동 (입구로부터)
     arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, STEPS_TO_POSITION_1)

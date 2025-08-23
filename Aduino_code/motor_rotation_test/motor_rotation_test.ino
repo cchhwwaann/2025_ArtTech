@@ -1,22 +1,11 @@
 // MOTOR_1 
-int ENA_1 = 5;
-int DIR_1 = 6; 
-int PUL_1 = 7;
-
+int ENA_1 = 1; int DIR_1 = 2; int PUL_1 = 3;
 // MOTOR_2
-int ENA_2 = 8;
-int DIR_2 = 9;
-int PUL_2 = 10;
-
+int ENA_2 = 4; int DIR_2 = 5; int PUL_2 = 6;
 // MOTOR_3 
-int ENA_3 = 2;
-int DIR_3 = 3;
-int PUL_3 = 4;
-
+int ENA_3 = 7; int DIR_3 = 8; int PUL_3 = 9;
 // 풀리 모터
-int ENA_4 = A1;
-int DIR_4 = A2;
-int PUL_4 = A3;
+int ENA_4 = 10; int DIR_4 = 11; int PUL_4 = 12;
 
 String incomingData = "";
 bool newData = false;
@@ -24,9 +13,9 @@ bool newData = false;
 // 모터 제어 함수
 void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
   if (steps > 0) {
-    digitalWrite(dirPin, HIGH);// 반시계방향 
+    digitalWrite(dirPin, HIGH);// (+)반시계방향 
   } else {
-    digitalWrite(dirPin, LOW);// 시계방향 
+    digitalWrite(dirPin, LOW);// (-)시계방향 
   }
   
   digitalWrite(enaPin, HIGH); // HIGH로 활성화

@@ -11,7 +11,7 @@ def send_motor_command(motor_number, steps):
     print(f"[기계 제어] 모터 {motor_number}에 {steps} 스텝 명령 준비.")
     
     try:
-        arduino_port = 'COM6'
+        arduino_port = 'COM6' # 변경소요있음
         with serial.Serial(arduino_port, 9600, timeout=5) as ser:
             time.sleep(2) # 아두이노와의 연결 안정화
 
@@ -37,4 +37,7 @@ def send_motor_command(motor_number, steps):
 
 if __name__ == "__main__":
     print("--- Machine Controller 단독 테스트 ---")
-    send_motor_command(4, -6000)#-4800이 풀리 모터 정방향으로 한바퀴반 , 주사기랑 풀리 둘 다-방향이 반시계,5600// 풀리 모터 풀코스로 -6000스텝 -가 시계방향
+    send_motor_command(4, -1000)
+    send_motor_command(1, 200)
+    send_motor_command(4, -1000)
+    send_motor_command(2, -200)
