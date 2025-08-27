@@ -1,7 +1,5 @@
 # 파일명: step_calculator_1.py
 
-# 스텝 계산 (파라미터)
-
 # --- 캐릭터별 레진 용량 정의 ---
 character_volumes = {
     '1': 35.0,
@@ -10,6 +8,10 @@ character_volumes = {
     '4': 50.0,
     '5': 55.0
 }
+
+# --- 염료 모터 스텝 파라미터 정의 ---
+#  10ml당 240 스텝이므로, 1ml당 24 스텝-----> 실험적으로 수정필요
+STEPS_PER_ML = 24.0
 
 def get_volume(character_name):
     """
@@ -26,15 +28,8 @@ def calculate_steps_from_emotions(emotion_data, total_volume_ml):
         print("오류: 유효한 감정 분석 데이터가 제공되지 않았습니다.")
         return 0, 0, 0
 
-    # --- 1. 물리적 파라미터 정의 ---
-    SYRINGE_AREA_MM2 = 2000.0
-    MM_PER_REVOLUTION = 69.08 # 고정
-    STEPS_PER_REVOLUTION = 3200 # 고정(변경가능)
-    MM_PER_STEP = MM_PER_REVOLUTION / STEPS_PER_REVOLUTION
-    MM3_PER_ML = 1000.0
-
-    # --- 2. 감정 비율을 색상 비율로 매핑 ---
-    # M1 (따뜻한 색): '기쁨', '분노' // M2 (중성색): '놀라움', '평온' // M3 (차가운 색): '슬픔', '두려움'
+    # --- 1. 감정 비율을 색상 비율로 매핑 ---
+    # M1 (따뜻한 색): 'joy', 'anger' // M2 (중성색): 'surprise', 'calm' // M3 (차가운 색): 'sadness', 'fear'
     
     m1_ratio = emotion_data.get('joy', 0) + emotion_data.get('anger', 0)
     m2_ratio = emotion_data.get('surprise', 0) + emotion_data.get('calm', 0)
@@ -51,13 +46,14 @@ def calculate_steps_from_emotions(emotion_data, total_volume_ml):
         # 감정이 감지되지 않으면 기본값으로 설정
         final_M1_ratio, final_M2_ratio, final_M3_ratio = 1/3, 1/3, 1/3
 
-    # --- 3. 각 색상의 용량과 스텝 수 계산 ---
+    # --- 2. 각 색상의 용량과 스텝 수 계산 ---
     M1_volume_ml = total_volume_ml * final_M1_ratio
     M2_volume_ml = total_volume_ml * final_M2_ratio
     M3_volume_ml = total_volume_ml * final_M3_ratio
     
-    M1_steps = int((M1_volume_ml * MM3_PER_ML) / SYRINGE_AREA_MM2 / MM_PER_STEP)
-    M2_steps = int((M2_volume_ml * MM3_PER_ML) / SYRINGE_AREA_MM2 / MM_PER_STEP)
-    M3_steps = int((M3_volume_ml * MM3_PER_ML) / SYRINGE_AREA_MM2 / MM_PER_STEP)
+    # 새로운 STEPS_PER_ML 파라미터를 사용하여 스텝 계산
+    M1_steps = int(M1_volume_ml * STEPS_PER_ML)
+    M2_steps = int(M2_volume_ml * STEPS_PER_ML)
+    M3_steps = int(M3_volume_ml * STEPS_PER_ML)
 
     return M1_steps, M2_steps, M3_steps

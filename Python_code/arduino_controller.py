@@ -8,10 +8,10 @@ def send_motor_command(motor_number, steps):
     """
     지정된 모터 번호와 스텝 수로 명령을 보내고, 아두이노의 'DONE' 신호를 기다립니다.
     """
-    print(f"[기계 제어] 모터 {motor_number}에 {steps} 스텝 명령 준비.")
+    # print(f"[기계 제어] 모터 {motor_number}에 {steps} 스텝 명령 준비.")
     
     try:
-        arduino_port = 'COM6' # 변경소요있음
+        arduino_port = 'COM6' # 아두이노 포트 번호 맞게
         with serial.Serial(arduino_port, 9600, timeout=5) as ser:
             time.sleep(2) # 아두이노와의 연결 안정화
 
@@ -37,7 +37,4 @@ def send_motor_command(motor_number, steps):
 
 if __name__ == "__main__":
     print("--- Machine Controller 단독 테스트 ---")
-    send_motor_command(4, -1000)
-    send_motor_command(1, 200)
-    send_motor_command(4, -1000)
-    send_motor_command(2, -200)
+    send_motor_command(2, -3200) 
