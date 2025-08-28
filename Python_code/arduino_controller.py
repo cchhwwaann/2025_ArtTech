@@ -37,4 +37,28 @@ def send_motor_command(motor_number, steps):
 
 if __name__ == "__main__":
     print("--- Machine Controller 단독 테스트 ---")
-    send_motor_command(2, -3200) 
+    print("\n[기계 동작] 순차적인 염료 투하 프로세스 시작...")
+
+    # 1. 카트를 1번 지점으로 이동 (입구로부터)
+    send_motor_command(3, 1600) #2120
+    
+    # 2. 1번 염료 모터 동작
+    #send_motor_command(1, 200)
+
+    # 3. 카트를 2번 지점으로 이동 (1번 지점으로부터)
+    #send_motor_command(4, 200) #1090
+
+    # 4. 2번 염료 모터 동작
+    #send_motor_command(2, 200)
+
+    # 5. 카트를 3번 지점으로 이동 (2번 지점으로부터)
+    #send_motor_command(4, 200) #1090
+    
+    # 6. 3번 염료 모터 동작
+    #send_motor_command(3, 200)
+    
+    # 7. 카트를 최종 출구 지점으로 이동 (3번 지점으로부터)
+    #print("[기계 동작] 최종 출구 위치로 카트 이동 시작...")
+    #send_motor_command(4, 200) #2300
+    
+    print("\n[기계 동작] 염료 투하 및 전진 시퀀스 완료.")

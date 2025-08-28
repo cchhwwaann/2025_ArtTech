@@ -1,7 +1,7 @@
-int ENA_1 = 1; int DIR_1 = 2; int PUL_1 = 3; // MOTOR_1
-int ENA_2 = 4; int DIR_2 = 5; int PUL_2 = 6; // MOTOR_2 
-int ENA_3 = 11; int DIR_3 = 12; int PUL_3 = 13; // MOTOR_3
-int ENA_4 = A0; int DIR_4 = A1; int PUL_4 = A2; // MOTOR_4(풀리 모터)
+int ENA_1 = 2; int DIR_1 = 3; int PUL_1 = 4; // MOTOR_1
+int ENA_2 = 5; int DIR_2 = 6; int PUL_2 = 7; // MOTOR_2 
+int ENA_3 = 8; int DIR_3 = 9; int PUL_3 = 10; // MOTOR_3
+int ENA_4 = 11; int DIR_4 = 12; int PUL_4 = 13; // MOTOR_4(풀리 모터)
 
 String incomingData = "";
 bool newData = false;
@@ -27,7 +27,6 @@ void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
   }
   
   Serial.println("DONE");
-  Serial.print("Motor operation completed.");
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setup() {
@@ -37,10 +36,10 @@ void setup() {
   pinMode(PUL_2, OUTPUT); pinMode(DIR_2, OUTPUT); pinMode(ENA_2, OUTPUT);
   pinMode(PUL_3, OUTPUT); pinMode(DIR_3, OUTPUT); pinMode(ENA_3, OUTPUT);
   pinMode(PUL_4, OUTPUT); pinMode(DIR_4, OUTPUT); pinMode(ENA_4, OUTPUT);
-  digitalWrite(ENA_1, LOW); digitalWrite(DIR_1, HIGH);
-  digitalWrite(ENA_2, LOW); digitalWrite(DIR_2, HIGH);
-  digitalWrite(ENA_3, LOW); digitalWrite(DIR_3, HIGH);
-  digitalWrite(ENA_4, LOW); digitalWrite(DIR_4, HIGH);
+  digitalWrite(ENA_1, HIGH); digitalWrite(DIR_1, HIGH);
+  digitalWrite(ENA_2, HIGH); digitalWrite(DIR_2, HIGH);
+  digitalWrite(ENA_3, HIGH); digitalWrite(DIR_3, HIGH);
+  digitalWrite(ENA_4, HIGH); digitalWrite(DIR_4, HIGH);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------

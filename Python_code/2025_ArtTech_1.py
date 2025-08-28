@@ -161,34 +161,6 @@ if __name__ == "__main__":
         print("\n오늘 당신의 감정을 3문장 이내로 자유롭게 입력해주세요.")
         user_text = get_multiline_input()
 
-        # --- 염료 리필 기능 ---
-        if user_text.lower() == '리필':
-            print("\n[염료 리필] 1, 2, 3번 염료 모터를 초기 위치로 되돌립니다. 잠시 기다려주세요.")
-
-            # 염료 모터 복귀
-            if m1_cumulative_steps > 0:
-                arduino_controller.send_motor_command(1, -m1_cumulative_steps)
-            if m2_cumulative_steps > 0:
-                arduino_controller.send_motor_command(2, -m2_cumulative_steps)
-            if m3_cumulative_steps > 0:
-                arduino_controller.send_motor_command(3, -m3_cumulative_steps)
-            
-            # 풀리 모터 복귀
-            if m4_cumulative_steps > 0:
-                arduino_controller.send_motor_command(4, -m4_cumulative_steps)
-
-            m1_cumulative_steps = 0
-            m2_cumulative_steps = 0
-            m3_cumulative_steps = 0
-            m4_cumulative_steps = 0
-            
-            # 리필 후 누적 스텝을 0으로 파일에 저장
-            step_file_manager.save_cumulative_steps([m1_cumulative_steps, m2_cumulative_steps, m3_cumulative_steps, m4_cumulative_steps])
-
-            print("\n[염료 리필]")
-            print("\n\n\n\n\n\n")
-            continue
-
         if user_text.lower() in ['종료!']:
             print("프로그램을 종료합니다.")
             break
