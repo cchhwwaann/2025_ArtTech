@@ -14,9 +14,9 @@ from PIL import Image
 import sequence_controller
 import step_calculator_1
 import arduino_controller
-import step_file_manager 
+import step_file_manager
 
-warnings.filterwarnings('ignore', category=UserWarning) # api 기한 안내 메세지 생략
+warnings.filterwarnings('ignore', category=UserWarning)
 
 # 1. 서비스 계정 키 파일 경로 설정
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/ghksc/Desktop/2025_ArtTech/smart-mark-464523-g6-6f8d28d38fc0.json"
@@ -150,15 +150,37 @@ if __name__ == "__main__":
 
         total_volume_ml = step_calculator_1.get_volume(character_choice)
         if total_volume_ml is not None:
-            print(f"선택한 캐릭터 ({character_choice})의 용량은 {total_volume_ml}ml 입니다.")
+            print(f"")
+
+        elif character_choice == '리필':
+            print("\n[염료 리필] 모든 모터를 초기 위치로 되돌립니다. 잠시 기다려주세요.")
+
+            # 1, 2, 3번 염료 모터 복귀
+            if m1_cumulative_steps > 0:
+                arduino_controller.send_motor_command(1, -m1_cumulative_steps)
+            if m2_cumulative_steps > 0:
+                arduino_controller.send_motor_command(2, -m2_cumulative_steps)
+            if m3_cumulative_steps > 0:
+                arduino_controller.send_motor_command(3, -m3_cumulative_steps)
+            
+            # 4번 풀리 모터 복귀
+            if m4_cumulative_steps > 0:
+                arduino_controller.send_motor_command(4, -m4_cumulative_steps)
+
+            # 누적 스텝을 0으로 초기화
+            m1_cumulative_steps, m2_cumulative_steps, m3_cumulative_steps, m4_cumulative_steps = 0, 0, 0, 0
+            
+            # 초기화된 누적 스텝을 파일에 저장
+            step_file_manager.save_cumulative_steps([m1_cumulative_steps, m2_cumulative_steps, m3_cumulative_steps, m4_cumulative_steps])
+
+            continue 
         elif character_choice == '종료!':
             print("프로그램을 종료합니다.")
             break
         else:
-            print("잘못된 캐릭터 이름입니다. 다시 입력해주세요.")
+            print("잘못된 캐릭터 이름입니다.")
             continue
 
-        print("\n오늘 당신의 감정을 3문장 이내로 자유롭게 입력해주세요.")
         user_text = get_multiline_input()
 
         if user_text.lower() in ['종료!']:
@@ -166,13 +188,13 @@ if __name__ == "__main__":
             break
 
         if not user_text.strip():
-            print("텍스트가 입력되지 않았습니다. 다시 입력해주세요.")
+            print("텍스트가 입력되지 않았습니다.")
             continue
 
         try:
             emotion_data = analyze_emotions_with_gemini(user_text)
             if not emotion_data:
-                print("감정 분석에 실패했습니다. 다음 참여자를 기다립니다...")
+                print("감정 분석에 실패했습니다")
                 continue
             
             m1_steps, m2_steps, m3_steps = step_calculator_1.calculate_steps_from_emotions(emotion_data, total_volume_ml)
@@ -204,16 +226,15 @@ if __name__ == "__main__":
             step_file_manager.save_cumulative_steps([m1_cumulative_steps, m2_cumulative_steps, m3_cumulative_steps, m4_cumulative_steps])
 
             consultation_message = generate_counseling_message_with_gemini(emotion_data, user_text)
-
-            print("\n--- 심리 상담 결과 ---")
-            print(consultation_message)
-            print("-----------------------")
             
             # --- QR 코드 생성 기능 호출 ---
             create_qr_image(consultation_message)
 
+            # ----------------------------------------
+            # 카트 복귀 로직 추가
+            # ----------------------------------------
             print("\n[작업 대기] 레진 경화가 완료되면 엔터(Enter)를 눌러 카트를 복귀시키세요.")
-            input(">>> ")
+            input("")
             
             # 카트 복귀 시퀀스 실행
             sequence_controller.return_to_start()

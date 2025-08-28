@@ -13,7 +13,6 @@ def save_cumulative_steps(steps):
             f.write(f"m2:{steps[1]}\n")
             f.write(f"m3:{steps[2]}\n")
             f.write(f"m4:{steps[3]}\n")
-        print("[파일 저장] 누적 스텝이 파일에 성공적으로 저장되었습니다.")
     except Exception as e:
         print(f"[오류] 누적 스텝 저장 중 오류가 발생했습니다: {e}")
 

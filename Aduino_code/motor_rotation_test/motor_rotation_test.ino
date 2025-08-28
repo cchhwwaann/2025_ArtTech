@@ -1,5 +1,6 @@
+// 파일명: motor_rotation_test.ino
 int ENA_1 = 2; int DIR_1 = 3; int PUL_1 = 4; // MOTOR_1
-int ENA_2 = 5; int DIR_2 = 6; int PUL_2 = 7; // MOTOR_2 
+int ENA_2 = 5; int DIR_2 = 6; int PUL_2 = 7; // MOTOR_2
 int ENA_3 = 8; int DIR_3 = 9; int PUL_3 = 10; // MOTOR_3
 int ENA_4 = 11; int DIR_4 = 12; int PUL_4 = 13; // MOTOR_4(풀리 모터)
 
@@ -9,14 +10,14 @@ bool newData = false;
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 // 모터 제어 함수
 void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
-  if (steps > 0) { 
-    digitalWrite(dirPin, HIGH);// 반시계방향 
+  if (steps > 0) {
+    digitalWrite(dirPin, HIGH); // 반시계방향
   } else {
-    digitalWrite(dirPin, LOW);// 시계방향 
+    digitalWrite(dirPin, LOW);  // 시계방향
   }
   
   digitalWrite(enaPin, HIGH);
-  delay(50); 
+  delay(50);
   
   // 반복문은 스텝의 절댓값만큼 실행
   for (int i = 0; i < abs(steps); i++) {
@@ -30,16 +31,16 @@ void moveMotor(int steps, int pulPin, int dirPin, int enaPin) {
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setup() {
-  Serial.begin(9600); 
+  Serial.begin(9600);
   
   pinMode(PUL_1, OUTPUT); pinMode(DIR_1, OUTPUT); pinMode(ENA_1, OUTPUT);
   pinMode(PUL_2, OUTPUT); pinMode(DIR_2, OUTPUT); pinMode(ENA_2, OUTPUT);
   pinMode(PUL_3, OUTPUT); pinMode(DIR_3, OUTPUT); pinMode(ENA_3, OUTPUT);
   pinMode(PUL_4, OUTPUT); pinMode(DIR_4, OUTPUT); pinMode(ENA_4, OUTPUT);
-  digitalWrite(ENA_1, HIGH); digitalWrite(DIR_1, HIGH);
-  digitalWrite(ENA_2, HIGH); digitalWrite(DIR_2, HIGH);
-  digitalWrite(ENA_3, HIGH); digitalWrite(DIR_3, HIGH);
-  digitalWrite(ENA_4, HIGH); digitalWrite(DIR_4, HIGH);
+  digitalWrite(ENA_1, HIGH); //digitalWrite(DIR_1, HIGH);
+  digitalWrite(ENA_2, HIGH); //digitalWrite(DIR_2, HIGH);
+  digitalWrite(ENA_3, HIGH); //digitalWrite(DIR_3, HIGH);
+  digitalWrite(ENA_4, HIGH); //digitalWrite(DIR_4, HIGH);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -16,7 +16,6 @@ def run_full_sequence(m1_steps, m2_steps, m3_steps):
     """
     카트 이동과 염료 투하를 순차적으로 제어하는 함수 (전진 부분만)
     """
-    print("\n[기계 동작] 순차적인 염료 투하 프로세스 시작...")
 
     # 1. 카트를 1번 지점으로 이동 (입구로부터)
     arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, STEPS_TO_POSITION_1)
@@ -37,15 +36,10 @@ def run_full_sequence(m1_steps, m2_steps, m3_steps):
     arduino_controller.send_motor_command(3, m3_steps)
     
     # 7. 카트를 최종 출구 지점으로 이동 (3번 지점으로부터)
-    print("[기계 동작] 최종 출구 위치로 카트 이동 시작...")
     arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, STEPS_TO_FINAL_EXIT)
     
-    print("\n[기계 동작] 염료 투하 및 전진 시퀀스 완료.")
-
 def return_to_start():
     """
     카트를 시작 지점으로 복귀시키는 함수
     """
-    print("\n[기계 동작] 시작 지점으로 카트 복귀 시작...")
     arduino_controller.send_motor_command(PULLY_MOTOR_NUMBER, -TOTAL_FORWARD_STEPS)
-    print("\n[기계 동작] 카트 복귀 완료.")
