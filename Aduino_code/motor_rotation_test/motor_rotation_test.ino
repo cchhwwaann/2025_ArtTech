@@ -1,8 +1,8 @@
 // 파일명: motor_rotation_test.ino
-int ENA_1 = 2; int DIR_1 = 3; int PUL_1 = 4; // MOTOR_1
-int ENA_2 = 5; int DIR_2 = 6; int PUL_2 = 7; // MOTOR_2
-int ENA_3 = 8; int DIR_3 = 9; int PUL_3 = 10; // MOTOR_3
-int ENA_4 = 11; int DIR_4 = 12; int PUL_4 = 13; // MOTOR_4(풀리 모터)
+int ENA_1 = 1; int DIR_1 = 3; int PUL_1 = 5; // MOTOR_1
+int ENA_2 = A0; int DIR_2 = A2; int PUL_2 = A4; // MOTOR_2
+int ENA_3 = 10; int DIR_3 = 9; int PUL_3 = 8; // MOTOR_3
+int ENA_4 = 13; int DIR_4 = 12; int PUL_4 = 11; // MOTOR_4(풀리 모터)
 
 String incomingData = "";
 bool newData = false;

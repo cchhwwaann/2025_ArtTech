@@ -7,40 +7,18 @@ import json
 from google.cloud import language_v1
 import vertexai
 from vertexai.preview.generative_models import GenerativeModel, Part
-import qrcode
-from PIL import Image
 
 # 모듈
 import sequence_controller
 import step_calculator_1
 import arduino_controller
 import step_file_manager
+import message_show
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
 # 1. 서비스 계정 키 파일 경로 설정
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/ghksc/Desktop/2025_ArtTech/smart-mark-464523-g6-6f8d28d38fc0.json"
-
-# --- QR 코드 이미지 생성 함수 ---
-def create_qr_image(message_text, output_filename="counseling_qr.png"):
-    try:
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=4,
-        )
-        qr.add_data(message_text)
-        qr.make(fit=True)
-        
-        qr_img = qr.make_image(fill_color="black", back_color="white")
-        qr_img.save(output_filename)
-        qr_img.show()
-        
-        return True
-    except Exception as e:
-        print(f"\n[오류] QR 코드 이미지 생성 중 오류가 발생했습니다: {e}")
-        return False
 
 # --- Gemini 감정 비율 추출 함수 ---
 def analyze_emotions_with_gemini(user_input_text):
@@ -226,9 +204,9 @@ if __name__ == "__main__":
             step_file_manager.save_cumulative_steps([m1_cumulative_steps, m2_cumulative_steps, m3_cumulative_steps, m4_cumulative_steps])
 
             consultation_message = generate_counseling_message_with_gemini(emotion_data, user_text)
-            
-            # --- QR 코드 생성 기능 호출 ---
-            create_qr_image(consultation_message)
+
+            # 메세지 사용
+            message_show.show_text_message(consultation_message)
 
             # ----------------------------------------
             # 카트 복귀 로직 추가
